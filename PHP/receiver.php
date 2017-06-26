@@ -14,6 +14,7 @@ $battery_perc = $_REQUEST["bp"];
 $battery_mvolt = $_REQUEST["bm"];
 $cpu_temp = $_REQUEST["ct"];
 $geolocation = $_REQUEST["gl"];
+$max_records = 1000;
 
 
 if ((!$raw_value or $raw_value==0 or $filtered_value==0 or $prev_time==0) and $transmitter_id != 10858926) {
@@ -39,13 +40,13 @@ if ($mysqli->connect_error) {
 
 $stmt = $sql->stmt_init();
 
-$stmt->prepare("CALL ADD_TRANSMITTER_DATA (?,?,?,?,?,?,?,?,?,?,?)");
+$stmt->prepare("CALL ADD_TRANSMITTER_DATA (?,?,?,?,?,?,?,?,?,?,?,?)");
 if ($stmt->errno) {
    echo 'Statement Error (' . $stmt->errno . ') ' . $stmt->error . "<br/>\n";
    exit;
 }
 
-$stmt->bind_param('iiiiiiiiiis',$transmitter_id,$password_code,$data_time,$raw_value,$filtered_value,$dex_battery,$prev_time,$battery_perc,$battery_mvolt,$cpu_temp,$geolocation);
+$stmt->bind_param('iiiiiiiiiisi',$transmitter_id,$password_code,$data_time,$raw_value,$filtered_value,$dex_battery,$prev_time,$battery_perc,$battery_mvolt,$cpu_temp,$geolocation,$max_records);
 if ($stmt->errno) {
    echo 'Statement Error (' . $stmt->errno . ') ' . $stmt->error . "<br/>\n";
    exit;
