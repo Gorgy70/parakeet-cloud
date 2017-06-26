@@ -1,0 +1,13 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^receiver.cgi$ receiver.php [L,QSA]
+RewriteRule ^([A-Z0-9]{5})/json.get$ json.php?trans=$1 [L,QSA]
+RewriteRule ^([A-Z0-9]{5})/map.get$ map.php?trans=$1 [L,QSA]
+RewriteRule ^([A-Z0-9]{5})/([0-9]+)/json.get$ json.php?trans=$1&password=$2 [L,QSA]
+RewriteRule ^([A-Z0-9]{5})/([0-9]+)/map.get$ map.php?trans=$1&password=$2 [L,QSA]
+
+
+ErrorDocument 404 /error.php
